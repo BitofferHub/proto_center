@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-http v2.7.1
 // - protoc             v3.20.1
-// source: shortUrlX/v1/shortUrlX.proto
+// source: shortUrlXsvr/v1/shortUrlX.proto
 
 package v1
 

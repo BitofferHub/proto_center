@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-http v2.7.1
 // - protoc             v3.20.1
-// source: lottery/v1/lottery.proto
+// source: lotterysvr/v1/lottery.proto
 
 package v1
 
@@ -27,7 +27,7 @@ type LotteryHTTPServer interface {
 
 func RegisterLotteryHTTPServer(s *http.Server, srv LotteryHTTPServer) {
 	r := s.Route("/")
-	r.POST("/lottery", _Lottery_LotteryV10_HTTP_Handler(srv))
+	r.POST("/lotterysvr", _Lottery_LotteryV10_HTTP_Handler(srv))
 }
 
 func _Lottery_LotteryV10_HTTP_Handler(srv LotteryHTTPServer) func(ctx http.Context) error {
@@ -66,7 +66,7 @@ func NewLotteryHTTPClient(client *http.Client) LotteryHTTPClient {
 
 func (c *LotteryHTTPClientImpl) LotteryV1(ctx context.Context, in *LotteryReq, opts ...http.CallOption) (*LotteryRsp, error) {
 	var out LotteryRsp
-	pattern := "/lottery"
+	pattern := "/lotterysvr"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationLotteryLotteryV1))
 	opts = append(opts, http.PathTemplate(pattern))

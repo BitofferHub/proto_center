@@ -4,14 +4,14 @@ package api.lottery.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "github.com/bitstormhub/bitstorm/lotterysvr/api/lottery/v1;v1";
+option go_package = "github.com/bitstormhub/bitstorm/lotterysvr/api/lotterysvr/v1;v1";
 option java_multiple_files = true;
-option java_package = "api.lottery.v1";
+option java_package = "api.lotterysvr.v1";
 
 service Lottery {
   rpc LotteryV1 (LotteryReq) returns (LotteryRsp){
     option (google.api.http) = {
-      post: "/lottery",
+      post: "/lotterysvr",
       body: "*"
     };
   }

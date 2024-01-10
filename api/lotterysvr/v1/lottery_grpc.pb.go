@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v3.20.1
-// source: lottery/v1/lottery.proto
+// source: lotterysvr/v1/lottery.proto
 
 package v1
 
@@ -105,5 +105,5 @@ var Lottery_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "lottery/v1/lottery.proto",
+	Metadata: "lotterysvr/v1/lottery.proto",
 }

@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v3.20.1
-// source: shortUrlX/v1/shortUrlX.proto
+// source: shortUrlXsvr/v1/shortUrlX.proto
 
 package v1
 
@@ -179,5 +179,5 @@ var ShortUrlX_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "shortUrlX/v1/shortUrlX.proto",
+	Metadata: "shortUrlXsvr/v1/shortUrlX.proto",
 }
