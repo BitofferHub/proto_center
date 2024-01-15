@@ -1,0 +1,195 @@
+syntax = "proto3";
+
+package api.asyncflow.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/bitstormhub/bitstorm/zhugeqing/asyncflow/api/asyncflow/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.asyncflow.v1";
+
+service AsyncFlow {
+  rpc CreateTask (CreateTaskRequest) returns (CreateTaskReply) {
+    option (google.api.http) = {
+      post: "/v1/create_task",
+      body: "*"
+    };
+  }
+
+  rpc HoldTasks (HoldTasksRequest) returns (HoldTasksReply) {
+    option (google.api.http) = {
+      post: "/v1/hold_tasks",
+      body: "*"
+    };
+  }
+  rpc GetTaskList (GetTaskListRequest) returns (GetTaskListReply) {
+    option (google.api.http) = {
+      get: "/v1/get_task_list",
+    };
+  }
+
+  rpc GetTaskScheduleCfgList (GetTaskScheduleCfgListRequest) returns (GetTaskScheduleCfgListReply) {
+    option (google.api.http) = {
+      get: "/v1/get_task_schedule_cfg_list",
+    };
+  }
+
+  rpc GetTask (GetTaskRequest) returns (GetTaskReply) {
+    option (google.api.http) = {
+      get: "/v1/get_task",
+    };
+  }
+
+  rpc SetTask (SetTaskRequest) returns (SetTaskReply) {
+    option (google.api.http) = {
+      post: "/v1/set_task",
+      body: "*"
+    };
+  }
+
+  rpc GetTaskCountsByType (GetTaskCountsByTypeRequest) returns (GetTaskCountsByTypeReply) {
+    option (google.api.http) = {
+      get: "/v1/get_task_counts_by_type",
+    };
+  }
+
+
+  rpc RegisterTask (RegisterTaskRequest) returns (RegisterTaskReply) {
+    option (google.api.http) = {
+      post: "/v1/register_task",
+      body: "*"
+    };
+  }
+
+
+
+  rpc Ping (PingRequest) returns (PingReply) {
+    option (google.api.http) = {
+      get: "/v1/ping"
+    };
+  }
+
+}
+
+message CreateTaskRequest {
+  TaskData task_data = 1;
+}
+
+message CreateTaskReply {
+  int32  code = 1;
+  string msg  = 2;
+  string task_id = 3;
+}
+
+message HoldTasksRequest {
+  int64 limit = 1;
+  string task_type = 2;
+}
+
+message HoldTasksReply {
+  int32  code = 1;
+  string msg  = 2;
+  repeated TaskData task_list = 3;
+}
+
+
+
+message RegisterTaskRequest {
+  string task_type = 1;
+}
+
+message RegisterTaskReply {
+  int32  code = 1;
+  string msg  = 2;
+}
+
+message GetTaskCountsByTypeRequest {
+  string task_type = 1;
+}
+
+message GetTaskCountsByTypeReply {
+  int32  code = 1;
+  string msg  = 2;
+  int64 task_count = 3;
+}
+
+message SetTaskRequest {
+  TaskData task_data = 1;
+}
+
+message SetTaskReply {
+  int32  code = 1;
+  string msg  = 2;
+}
+
+message GetTaskRequest {
+  string task_id = 1;
+}
+
+message GetTaskReply {
+  int32  code = 1;
+  string msg  = 2;
+  TaskData  task_data = 3;
+}
+
+message GetTaskScheduleCfgListRequest {
+}
+
+message GetTaskScheduleCfgListReply {
+  int32  code = 1;
+  string msg  = 2;
+  repeated TaskScheduleCfg task_schedule_cfg_list = 3;
+}
+
+message GetTaskListRequest {
+  int64    status    = 1;
+  int64    limit     = 2;
+  string task_type = 3;
+}
+
+message GetTaskListReply {
+  int32  code = 1;
+  string msg  = 2;
+  repeated  TaskData task_list = 3;
+}
+
+
+
+message TaskData {
+  string user_id = 1;
+  string task_id = 2;
+  string task_type = 3;
+  string task_stage = 4;
+  int64 status = 5;
+  optional int64 priority = 6;
+  int64 crt_retry_num = 7;
+  int64 max_retry_num = 8;
+  int64 max_retry_interval = 9;
+  string schedule_log = 10;
+  string context = 11;
+  int64 order_time = 12;
+  google.protobuf.Timestamp create_time = 13;
+  google.protobuf.Timestamp modify_time = 14;
+}
+
+message TaskScheduleCfg {
+  string task_type = 1;
+  int64 schedule_limit = 2;
+  int64 schedule_interval = 3;
+  int64 max_processing_time = 4;
+  int64  max_retry_num = 5;
+  int64  retry_interval = 6;
+  int64  max_retry_interval = 7;
+  google.protobuf.Timestamp create_time = 8;
+  google.protobuf.Timestamp modify_time = 9;
+}
+
+
+message PingRequest {
+
+}
+
+message PingReply {
+
+}
