@@ -20,6 +20,7 @@ service Lottery {
 message CommonRspInfo {
   int32 code = 1;
   string msg = 2;
+  uint32 user_id = 3;
 }
 
 message LotteryReq {

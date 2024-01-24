@@ -6,6 +6,58 @@ info:
     title: ""
     version: 0.0.1
 paths:
+    /create_user:
+        post:
+            tags:
+                - User
+            operationId: User_CreateUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.user.v1.CreateUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.user.v1.CreateUserReply'
+    /get_user_info:
+        get:
+            tags:
+                - User
+            operationId: User_GetUser
+            parameters:
+                - name: userID
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.user.v1.GetUserReply'
+    /get_user_info_byname:
+        get:
+            tags:
+                - User
+            operationId: User_GetUserByName
+            parameters:
+                - name: userName
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.user.v1.GetUserByNameReply'
     /lotterysvr:
         post:
             tags:
@@ -42,18 +94,161 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/api.shortUrlX.v1.GetLongUrlReply'
-    /v1/ping:
-        get:
+    /v1/create_task:
+        post:
             tags:
-                - ShortUrlX
-            operationId: ShortUrlX_Ping
+                - AsyncFlow
+            operationId: AsyncFlow_CreateTask
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.asyncflow.v1.CreateTaskRequest'
+                required: true
             responses:
                 "200":
                     description: OK
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/api.shortUrlX.v1.PingReply'
+                                $ref: '#/components/schemas/api.asyncflow.v1.CreateTaskReply'
+    /v1/get_task:
+        get:
+            tags:
+                - AsyncFlow
+            operationId: AsyncFlow_GetTask
+            parameters:
+                - name: taskId
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.asyncflow.v1.GetTaskReply'
+    /v1/get_task_counts_by_type:
+        get:
+            tags:
+                - AsyncFlow
+            operationId: AsyncFlow_GetTaskCountsByType
+            parameters:
+                - name: taskType
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.asyncflow.v1.GetTaskCountsByTypeReply'
+    /v1/get_task_list:
+        get:
+            tags:
+                - AsyncFlow
+            operationId: AsyncFlow_GetTaskList
+            parameters:
+                - name: status
+                  in: query
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  schema:
+                    type: string
+                - name: taskType
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.asyncflow.v1.GetTaskListReply'
+    /v1/get_task_schedule_cfg_list:
+        get:
+            tags:
+                - AsyncFlow
+            operationId: AsyncFlow_GetTaskScheduleCfgList
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.asyncflow.v1.GetTaskScheduleCfgListReply'
+    /v1/hold_tasks:
+        post:
+            tags:
+                - AsyncFlow
+            operationId: AsyncFlow_HoldTasks
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.asyncflow.v1.HoldTasksRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.asyncflow.v1.HoldTasksReply'
+    /v1/ping:
+        get:
+            tags:
+                - AsyncFlow
+            operationId: AsyncFlow_Ping
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.asyncflow.v1.PingReply'
+    /v1/register_task:
+        post:
+            tags:
+                - AsyncFlow
+            operationId: AsyncFlow_RegisterTask
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.asyncflow.v1.RegisterTaskRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.asyncflow.v1.RegisterTaskReply'
+    /v1/set_task:
+        post:
+            tags:
+                - AsyncFlow
+            operationId: AsyncFlow_SetTask
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.asyncflow.v1.SetTaskRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.asyncflow.v1.SetTaskReply'
     /v1/shorten:
         post:
             tags:
@@ -74,6 +269,169 @@ paths:
                                 $ref: '#/components/schemas/api.shortUrlX.v1.CreateShortUrlReply'
 components:
     schemas:
+        api.asyncflow.v1.CreateTaskReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                msg:
+                    type: string
+                taskId:
+                    type: string
+        api.asyncflow.v1.CreateTaskRequest:
+            type: object
+            properties:
+                taskData:
+                    $ref: '#/components/schemas/api.asyncflow.v1.TaskData'
+        api.asyncflow.v1.GetTaskCountsByTypeReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                msg:
+                    type: string
+                taskCount:
+                    type: string
+        api.asyncflow.v1.GetTaskListReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                msg:
+                    type: string
+                taskList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/api.asyncflow.v1.TaskData'
+        api.asyncflow.v1.GetTaskReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                msg:
+                    type: string
+                taskData:
+                    $ref: '#/components/schemas/api.asyncflow.v1.TaskData'
+        api.asyncflow.v1.GetTaskScheduleCfgListReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                msg:
+                    type: string
+                taskScheduleCfgList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/api.asyncflow.v1.TaskScheduleCfg'
+        api.asyncflow.v1.HoldTasksReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                msg:
+                    type: string
+                taskList:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/api.asyncflow.v1.TaskData'
+        api.asyncflow.v1.HoldTasksRequest:
+            type: object
+            properties:
+                limit:
+                    type: string
+                taskType:
+                    type: string
+        api.asyncflow.v1.PingReply:
+            type: object
+            properties: {}
+        api.asyncflow.v1.RegisterTaskReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                msg:
+                    type: string
+        api.asyncflow.v1.RegisterTaskRequest:
+            type: object
+            properties:
+                taskType:
+                    type: string
+        api.asyncflow.v1.SetTaskReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                msg:
+                    type: string
+        api.asyncflow.v1.SetTaskRequest:
+            type: object
+            properties:
+                taskData:
+                    $ref: '#/components/schemas/api.asyncflow.v1.TaskData'
+        api.asyncflow.v1.TaskData:
+            type: object
+            properties:
+                userId:
+                    type: string
+                taskId:
+                    type: string
+                taskType:
+                    type: string
+                taskStage:
+                    type: string
+                status:
+                    type: string
+                priority:
+                    type: string
+                crtRetryNum:
+                    type: string
+                maxRetryNum:
+                    type: string
+                maxRetryInterval:
+                    type: string
+                scheduleLog:
+                    type: string
+                context:
+                    type: string
+                orderTime:
+                    type: string
+                createTime:
+                    type: string
+                    format: date-time
+                modifyTime:
+                    type: string
+                    format: date-time
+        api.asyncflow.v1.TaskScheduleCfg:
+            type: object
+            properties:
+                taskType:
+                    type: string
+                scheduleLimit:
+                    type: string
+                scheduleInterval:
+                    type: string
+                maxProcessingTime:
+                    type: string
+                maxRetryNum:
+                    type: string
+                retryInterval:
+                    type: string
+                maxRetryInterval:
+                    type: string
+                createTime:
+                    type: string
+                    format: date-time
+                modifyTime:
+                    type: string
+                    format: date-time
         api.lottery.v1.CommonRspInfo:
             type: object
             properties:
@@ -82,6 +440,9 @@ components:
                     format: int32
                 msg:
                     type: string
+                userId:
+                    type: integer
+                    format: uint32
         api.lottery.v1.LotteryPrizeInfo:
             type: object
             properties:
@@ -159,6 +520,89 @@ components:
                     format: int32
                 message:
                     type: string
+        api.user.v1.CreateUserData:
+            type: object
+            properties:
+                userID:
+                    type: string
+                token:
+                    type: string
+        api.user.v1.CreateUserReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                message:
+                    type: string
+                data:
+                    $ref: '#/components/schemas/api.user.v1.CreateUserData'
+        api.user.v1.CreateUserRequest:
+            type: object
+            properties:
+                userName:
+                    type: string
+                pwd:
+                    type: string
+                sex:
+                    type: integer
+                    format: int32
+                age:
+                    type: integer
+                    format: int32
+                email:
+                    type: string
+                contact:
+                    type: string
+                mobile:
+                    type: string
+                idCard:
+                    type: string
+        api.user.v1.GetUserByNameReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                message:
+                    type: string
+                data:
+                    $ref: '#/components/schemas/api.user.v1.GetUserReplyData'
+        api.user.v1.GetUserReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                message:
+                    type: string
+                data:
+                    $ref: '#/components/schemas/api.user.v1.GetUserReplyData'
+        api.user.v1.GetUserReplyData:
+            type: object
+            properties:
+                userID:
+                    type: string
+                userName:
+                    type: string
+                pwd:
+                    type: string
+                sex:
+                    type: integer
+                    format: int32
+                age:
+                    type: integer
+                    format: int32
+                email:
+                    type: string
+                contact:
+                    type: string
+                mobile:
+                    type: string
+                idCard:
+                    type: string
 tags:
+    - name: AsyncFlow
     - name: Lottery
     - name: ShortUrlX
+    - name: User
